@@ -1,8 +1,9 @@
-import React from 'react'
+import { HomePageContainer } from '@/containers/home-page-container'
+
 
 const HomePage = () => {
   return (
-    <div>Home Page</div>
+    <HomePageContainer />
   )
 }
 
