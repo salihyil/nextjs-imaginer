@@ -1,14 +1,11 @@
-import { HomePageContainer } from '@/containers/HomePageContainer'
-import PromptForm from '@/containers/HomePageContainer/components/PromptForm/PromptForm'
-
+import { HomePageContainer } from '@/containers/HomePageContainer';
 
 const HomePage = () => {
   return (
     <>
       <HomePageContainer />
-      <PromptForm />
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
