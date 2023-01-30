@@ -1,12 +1,16 @@
 'use client';
-import { useState } from 'react';
+import { useHomePage } from '@/context/useHomePage';
+import React from 'react';
 import styles from './styles.module.scss';
 
 const PromptForm = () => {
-  const [prompt, setPrompt] = useState('');
+  const { prompt, setPrompt, generateImage } = useHomePage();
 
   const handlePromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setPrompt(e.target.value);
-  const handleFormSubmit = () => {};
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    generateImage();
+  };
 
   return (
     <div className={styles.promptForm}>
