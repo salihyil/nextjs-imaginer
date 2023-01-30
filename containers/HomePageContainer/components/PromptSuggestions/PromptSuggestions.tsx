@@ -1,6 +1,6 @@
 import { SUGGESTIONS } from './constants';
 
-import { Tag } from '@/components/Tag';
+import Tag from '@/components/Tag';
 
 import styles from './styles.module.scss';
 

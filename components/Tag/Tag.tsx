@@ -20,4 +20,4 @@ const Tag = ({ title, onClick }: ITagProps) => {
   );
 };
 
-export { Tag };
+export default Tag;

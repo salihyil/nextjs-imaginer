@@ -1,4 +1,4 @@
-import { HomePageContainer } from '@/containers/HomePageContainer';
+import HomePageContainer from '@/containers/HomePageContainer';
 
 const HomePage = () => {
   return (

@@ -17,4 +17,4 @@ const HomePageContainer = () => {
   );
 };
 
-export { HomePageContainer };
+export default HomePageContainer;
