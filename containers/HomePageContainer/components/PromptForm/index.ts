@@ -1,1 +1,1 @@
-export * from './PromptForm';
+export { default } from './PromptForm';
