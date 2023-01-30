@@ -1,6 +1,6 @@
 import PromptForm from '@/containers/HomePageContainer/components/PromptForm';
 import PromptSuggestions from '@/containers/HomePageContainer/components/PromptSuggestions';
-import Examples from '../Examples';
+import Examples from '@/containers/HomePageContainer/components/Examples';
 
 import styles from './styles.module.scss';
 
