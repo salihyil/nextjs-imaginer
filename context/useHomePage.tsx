@@ -22,9 +22,6 @@ type Props = {
 };
 export const HomePageProvider = ({ children }: Props) => {
   const [prompt, setPrompt] = useState<string>('');
-  const generateImage = () => {
-    //api call
-  };
   const changePrompt = (newPrompt: string) => {
     setPrompt(newPrompt);
     window.scrollTo(0, 0);
@@ -35,7 +32,19 @@ export const HomePageProvider = ({ children }: Props) => {
     () => ({
       prompt,
       setPrompt,
-      generateImage,
+      generateImage: async () => {
+        try {
+          await fetch('api/generate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ prompt }),
+          });
+        } catch (error) {
+          throw new Error('Failed to generate');
+        }
+      },
       changePrompt,
     }),
     [prompt]
