@@ -1,9 +1,10 @@
 'use client';
+
 import styles from './styles.module.scss';
 
 interface ITagProps {
-  title: string;
-  onClick?: (title: string) => void;
+  title: string | React.ReactNode;
+  onClick?: (title: any) => void;
 }
 
 const Tag = ({ title, onClick }: ITagProps) => {

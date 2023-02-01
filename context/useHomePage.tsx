@@ -6,6 +6,9 @@ interface IHomePageContext {
   setPrompt: React.Dispatch<React.SetStateAction<string>>;
   generateImage: () => void;
   changePrompt: (newPrompt: string) => void;
+  isSubmitting: boolean;
+  error: string | null;
+  image: string;
 }
 
 const defaultValue = {
@@ -13,15 +16,22 @@ const defaultValue = {
   setPrompt: () => {},
   generateImage: () => {},
   changePrompt: () => {},
+  isSubmitting: false,
+  error: null,
+  image: '',
 };
 
-const HomePageContext = createContext<IHomePageContext>(defaultValue);
+export const HomePageContext = createContext<IHomePageContext>(defaultValue);
 
 type Props = {
   children: React.ReactNode;
 };
 export const HomePageProvider = ({ children }: Props) => {
   const [prompt, setPrompt] = useState<string>('');
+  const [image, setImage] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setSubmitting] = useState(false);
+
   const changePrompt = (newPrompt: string) => {
     setPrompt(newPrompt);
     window.scrollTo(0, 0);
@@ -34,20 +44,29 @@ export const HomePageProvider = ({ children }: Props) => {
       setPrompt,
       generateImage: async () => {
         try {
-          await fetch('api/generate', {
+          const response = await fetch('api/generate', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ prompt }),
           });
+
+          if (!response.ok) throw new Error('Failed To c reate');
+
+          const generateImage = await response.json();
+          setImage(generateImage);
         } catch (error) {
+          setError(error as string);
           throw new Error('Failed to generate');
         }
       },
       changePrompt,
+      image,
+      error,
+      isSubmitting,
     }),
-    [prompt]
+    [error, image, isSubmitting, prompt]
   );
   return <HomePageContext.Provider value={data}>{children}</HomePageContext.Provider>;
 };
