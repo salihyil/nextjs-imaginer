@@ -1,3 +1,4 @@
+'use client';
 import Loading from '@/components/Loading';
 import Tag from '@/components/Tag';
 import { useHomePage } from '@/context/useHomePage';
