@@ -43,6 +43,7 @@ export const HomePageProvider = ({ children }: Props) => {
       prompt,
       setPrompt,
       generateImage: async () => {
+        setSubmitting(true);
         try {
           const response = await fetch('api/generate', {
             method: 'POST',
@@ -56,10 +57,12 @@ export const HomePageProvider = ({ children }: Props) => {
 
           const generateImage = await response.json();
           setImage(generateImage);
+          setError(null);
         } catch (error) {
           setError(error as string);
           throw new Error('Failed to generate');
         }
+        setSubmitting(false);
       },
       changePrompt,
       image,

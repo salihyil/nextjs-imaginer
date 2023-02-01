@@ -30,7 +30,7 @@ const ResultImage = () => {
                 }
               />
             </div>
-            <Image src={image} alt={prompt} fill />
+            <Image src={image} alt={prompt} width={512} height={512} />
           </>
         )}
       </div>
