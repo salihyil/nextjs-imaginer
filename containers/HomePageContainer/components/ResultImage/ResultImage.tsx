@@ -8,9 +8,9 @@ import Link from 'next/link';
 import styles from './styles.module.scss';
 
 const ResultImage = () => {
-  const { isSubmitting, error, image, prompt } = useHomePage();
+  const { isSubmitting, error, image, resultPrompt } = useHomePage();
 
-  if (error) return <p className={styles.error}>{error}</p>;
+  if (error) return <p className={styles.error}>{error.toString()}</p>;
   if (!isSubmitting && !image) return null;
 
   return (
@@ -21,7 +21,7 @@ const ResultImage = () => {
         ) : (
           <>
             <div className={styles.content}>
-              <p>{prompt}</p>
+              <p>{resultPrompt}</p>
               <Tag
                 title={
                   <Link href={image} target='_blank' download>
@@ -30,7 +30,7 @@ const ResultImage = () => {
                 }
               />
             </div>
-            <Image src={image} alt={prompt} width={512} height={512} />
+            <Image src={image} alt={resultPrompt} width={512} height={512} />
           </>
         )}
       </div>

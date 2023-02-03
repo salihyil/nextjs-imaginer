@@ -9,6 +9,7 @@ interface IHomePageContext {
   isSubmitting: boolean;
   error: string | null;
   image: string;
+  resultPrompt: string;
 }
 
 const defaultValue = {
@@ -19,6 +20,7 @@ const defaultValue = {
   isSubmitting: false,
   error: null,
   image: '',
+  resultPrompt: '',
 };
 
 export const HomePageContext = createContext<IHomePageContext>(defaultValue);
@@ -31,6 +33,7 @@ export const HomePageProvider = ({ children }: Props) => {
   const [image, setImage] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setSubmitting] = useState(false);
+  const [resultPrompt, setResultPrompt] = useState('');
 
   const changePrompt = (newPrompt: string) => {
     setPrompt(newPrompt);
@@ -44,6 +47,9 @@ export const HomePageProvider = ({ children }: Props) => {
       setPrompt,
       generateImage: async () => {
         setSubmitting(true);
+        setImage('');
+        setResultPrompt('');
+
         try {
           const response = await fetch('api/generate', {
             method: 'POST',
@@ -53,14 +59,15 @@ export const HomePageProvider = ({ children }: Props) => {
             body: JSON.stringify({ prompt }),
           });
 
-          if (!response.ok) throw new Error('Failed To c reate');
+          if (!response.ok) throw new Error(response.statusText ?? response.status);
 
-          const generateImage = await response.json();
-          setImage(generateImage);
+          const generatedImage = await response.json();
+
           setError(null);
+          setResultPrompt(prompt);
+          setImage(generatedImage);
         } catch (error) {
           setError(error as string);
-          throw new Error('Failed to generate');
         }
         setSubmitting(false);
       },
@@ -68,8 +75,9 @@ export const HomePageProvider = ({ children }: Props) => {
       image,
       error,
       isSubmitting,
+      resultPrompt,
     }),
-    [error, image, isSubmitting, prompt]
+    [error, image, isSubmitting, prompt, resultPrompt]
   );
   return <HomePageContext.Provider value={data}>{children}</HomePageContext.Provider>;
 };
